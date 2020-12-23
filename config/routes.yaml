@@ -1,3 +1,13 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+  path: /
+  controller: App\Controller\TestController::index
+
+#test:
+  # path: /test/{age<\d+?0}
+  #controller: App\Controller\TestController::test
+  #methods: [GET, POST]
+  #host: localhost
+  #schemes: [https, http]
+# il est possible de mettre des contraintes sur les routes en utilisant : methods avec lesquelles on peut l'appeler
+# host: {subdomain}.monsite.com,
+# schemes
