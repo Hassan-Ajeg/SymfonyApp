@@ -3,30 +3,45 @@
 namespace App\Controller;
 
 use App\Taxes\Calculator;
+use App\Taxes\Detector;
 use Cocur\Slugify\Slugify;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class HelloController
 {
-    protected $calculator;
-    protected $tva;
+    protected $twig;
 
-    public function __construct(Calculator $calculator)
+    public function __construct(Environment $twig)
     {
-        $this->calculator = $calculator;
+        $this->twig = $twig;
     }
-
     /**
      * @Route("/hello/{name?world}", name="hello", methods={"GET", "POST"})
      */
-    public function hello($name, LoggerInterface $logger, Calculator $calculator, Slugify $slugify)
+    public function hello($name, Environment $twig)
     {
-        dump($slugify->slugify("Hello world"));
-        $tva = $this->calculator->calcul(100);
-        dump($tva);
-        return new Response("Hello $name");
+        return $this->render('hello.html.twig', [
+            'name' => $name
+        ]);
+    }
+
+    /**
+     * @Route("/example", name="example")
+     */
+    public function example()
+    {
+        return $this->render('example.html.twig', [
+            'age' => 33
+        ]);
+    }
+
+    protected function render(string $path, array $variables = [])
+    {
+        $html = $this->twig->render($path, $variables);
+        return new Response($html);
     }
 }
