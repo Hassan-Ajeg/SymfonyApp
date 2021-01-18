@@ -32,13 +32,15 @@ class ProductType extends AbstractType
                 'label' => 'Nom du produit',
                 'attr' => [
                     'class' => 'form-control', 'palceholder' => 'Tapez le nom du produit'
-                ]
+                ],
+                'required' => false
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Description courte',
                 'attr' => [
                     'class' => 'form-control', 'placeholder' => 'Tapez une description assez courte mais parlante pour le visiteur'
-                ]
+                ],
+                'required' => false
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'Prix du produit',
@@ -46,6 +48,7 @@ class ProductType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Tapez le prix du produit en €'
                 ],
+                'required' => false,
                 'divisor' => 100
 
             ])
@@ -53,7 +56,9 @@ class ProductType extends AbstractType
                 'label' => 'Image du produit',
                 'attr' => [
                     'placeholder' => 'Tapez une URL d\'image '
-                ]
+                ],
+                'required' => false
+
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',

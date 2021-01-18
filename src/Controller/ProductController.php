@@ -8,7 +8,6 @@ use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Return_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
@@ -62,8 +63,42 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/{id}/edit" , name="product_edit" )
      */
-    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em)
+    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
     {
+        //$product = new Product;
+        //$product->setName('Tajine')->setPrice(123);
+
+        //$resultat = $validator->validate($product);
+
+
+        /*validation des données
+        $client = [
+            'nom' => 'Ajeg',
+            'prenom' => 'Hassan',
+            'voiture' => [
+                'marque' => 'Opel',
+                'couleur' => 'Noire'
+            ]
+        ];
+
+        //création d'une collection de contraintes
+        $collection = new Collection([
+            'nom' => new NotBlank(['message' => "le nom ne doit être vide !"]),
+            'prenom' => [new NotBlank(['message' => "le prénom ne doit être vide !"]), new Length(['min' => 3, 'minMessage' => "Le prénom ne doit pas faire moins de 3 caractères !"])],
+            'voiture' => new Collection([
+                'marque' => new NotBlank(['message' => 'La marque de la voiture est obligatoire']),
+                'couleur' => new NotBlank(['message' => "La couleur de la voiture est obligatoire"])
+            ])
+        ]);*/
+
+        //validation des données en utilisant Validator
+        //$resultat = $validator->validate($client, $collection);
+
+        /*if ($resultat->count() > 0) {
+            dd("il y a des erreurs ");
+        }
+        dd("tout va bien ");*/
+
         //recherche du produit en fonction de l'id
         $product = $productRepository->find($id);
 
@@ -77,9 +112,7 @@ class ProductController extends AbstractController
         //demande au formulaire d'inspecter la requete si le form est soumis
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-
-            dd($form->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em->flush();
 
@@ -127,7 +160,7 @@ class ProductController extends AbstractController
         //demande au formulaire de gérer la requete
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // $product = $form->getData(); cette ligne a été remplacée par l'injection du produit au moment de la création du form
 
             $product->setSlug(strtolower($slugger->slug($product->getName())));
