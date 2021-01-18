@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Editer une catégorie
+{% endblock %}
+{% block body %}
+	<h1>Editer la catégorie ==>
+		{{ category.name }}</h1>
+
+	{{ form_start( formView ) }}
+	{{ form_errors( formView ) }}
+
+	<div class="row">
+		<div class="col">
+			{{ form_row( formView.name ) }}
+		</div>
+		<button class="btn btn-primary mt-3 btn-block">
+			<i class="fas fa-save"></i>
+			Editer la catégorie
+		</button>
+	</div>
+	{{ form_end( formView ) }}
+
+{% endblock %}
