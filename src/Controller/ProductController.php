@@ -79,6 +79,8 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted()) {
 
+            dd($form->getData());
+
             $em->flush();
 
             /*faire la redirection vers la page du produit édité
