@@ -20,20 +20,7 @@
 	<div class="row">
 		{% for p in category.products %}
 			<div class="col-3">
-				<div class="card">
-					<img src="{{ p.mainPicture }}" class="img-fluid" alt=""></div>
-				<div class="card-body">
-					<h4>{{ p.name }}
-						({{ p.price / 100 }}
-						€)</h4>
-					<span class="badge badge-info">{{ p.category.name }}</span>
-					<p class="card-text">
-						{{ p.shortDescription }}</p>
-					<a href="{{ path('product_show', {'category_slug': p.category.slug, 'slug': p.slug })}}" class="btn btn-primary btn-sm">Détais
-					</a>
-					<a href="#" class="btn btn-success btn-sm">Ajouter au panier
-					</a>
-				</div>
+				{% include "product/_product_card.html.twig" %}
 			</div>
 
 		{% endfor %}
