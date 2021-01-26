@@ -57,7 +57,10 @@ class CartService
         }
         return $total;
     }
-
+    /**
+     * 
+     * @return CartItem[]
+     */
     public function getDetailedCartItems(): array
     {
         //on stocke les details du produit dans un tableau avec une clé : produit et qte comme valeur
@@ -101,5 +104,13 @@ class CartService
         $cart[$id]--;
 
         $this->saveCart($cart);
+    }
+
+    /**
+     * 
+     */
+    public function empty()
+    {
+        $this->saveCart([]);
     }
 }
