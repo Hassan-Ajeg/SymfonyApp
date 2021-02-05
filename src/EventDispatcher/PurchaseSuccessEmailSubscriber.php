@@ -15,6 +15,6 @@ class PurchaseSuccessEmailSubscriber implements EventSubscriberInterface
     }
     public function sendSuccessEmail(PurchaseSuccessEvent $purchaseSuccessEvent)
     {
-        dd($purchaseSuccessEvent);
+        dump($purchaseSuccessEvent);
     }
 }
