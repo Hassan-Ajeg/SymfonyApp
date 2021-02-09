@@ -2,8 +2,7 @@
 	<img src="{{ p.mainPicture }}" class="img-fluid" alt=""></div>
 <div class="card-body">
 	<h4>{{ p.name }}
-		({{ p.price / 100 }}
-		€)</h4>
+		({{ p.price | amount }})</h4>
 	<span class="badge badge-info">{{ p.category.name }}</span>
 	<p class="card-text">
 		{{ p.shortDescription }}</p>
